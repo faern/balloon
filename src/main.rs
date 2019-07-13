@@ -43,6 +43,7 @@ fn main() {
         let lock_start = Instant::now();
         if let Err(e) = region::lock(data_slice.as_ptr(), data_slice.len()) {
             eprintln!("Unable to lock memory: {}", e);
+            eprintln!("Try running with --no-lock");
             process::exit(1);
         }
         eprintln!(

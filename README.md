@@ -32,6 +32,22 @@ program starts it will do the following:
    memory page and then sleeping for `<sleep in ms>` before in starts over again.
    If `--poll-interval` is not present, the program will just sleep forever from here.
 
+## Notes on memory locking
+
+On Linux there are certain restrictions on who can lock memory with the `mlock` call and how much
+they can lock. If running on Linux 2.6.8 or earlier, only root can lock memory. In newer kernels
+unpriviledges users can lock memory, but the amount is limited by the RLIMIT_MEMLOCK resource limit.
+This limit can be adjusted with the `ulimit -l <amount in kb>` command, but only root can do that,
+and the limit is applied per session. So the easiest would be to run balloon as root, otherwise
+try something like:
+
+```bash
+faern@machine:~ $ sudo -i
+root@machine:~ $ ulimit -l 10485760 # 10 GiB in KiB
+root@machine:~ $ sudo -i faern
+faern@machine:~ $ balloon 10G
+```
+
 ## Example scenario
 
 Say you want to benchmark your filesystem and disks. So you run some benchmarking utility that
