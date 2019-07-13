@@ -3,20 +3,18 @@ use rand_core::{RngCore, SeedableRng};
 use rand_xorshift::XorShiftRng;
 use std::{
     alloc::{alloc, Layout},
-    convert::TryFrom,
     process, thread,
     time::{Duration, Instant},
 };
 use structopt::StructOpt;
 
 mod cli;
-mod mlock;
 mod poll;
 
 fn main() {
     let opt = cli::Opt::from_args();
 
-    let page_size = opt.page_size.unwrap_or_else(page_size);
+    let page_size = opt.page_size.unwrap_or_else(region::page::size);
     let num_pages = opt.size / page_size;
 
     eprintln!(
@@ -41,15 +39,15 @@ fn main() {
         alloc_start.elapsed().as_millis()
     );
 
-    if !opt.no_mlock {
-        let mlock_start = Instant::now();
-        if let Err(e) = mlock::mlock(data_slice) {
-            eprintln!("Unable to mlock memory: {}", e);
+    if !opt.no_lock {
+        let lock_start = Instant::now();
+        if let Err(e) = region::lock(data_slice.as_ptr(), data_slice.len()) {
+            eprintln!("Unable to lock memory: {}", e);
             process::exit(1);
         }
         eprintln!(
             "Locked memory region in main memory in {} ms",
-            mlock_start.elapsed().as_millis()
+            lock_start.elapsed().as_millis()
         );
     } else {
         println!("Skipping locking the allocated memory pages to main memory");
@@ -95,18 +93,5 @@ fn prefixed_bytes(bytes: usize) -> String {
             }
         }
         Prefixed(prefix, n) => format!("{:.0} {}B", n, prefix),
-    }
-}
-
-/// Query the system for the memory page size.
-fn page_size() -> usize {
-    #[cfg(unix)]
-    {
-        let page_size = unsafe { libc::sysconf(libc::_SC_PAGESIZE) };
-        usize::try_from(page_size).expect("Page size larger than usize")
-    }
-    #[cfg(not(unix))]
-    {
-        4096
     }
 }

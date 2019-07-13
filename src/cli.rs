@@ -13,21 +13,21 @@ pub struct Opt {
     pub size: usize,
 
     #[structopt(long, parse(try_from_str = "parse_page_size"))]
-    /// The page size to use. Controls the alignment of the allocated memory, as well as the offset
-    /// between each read+write in the poll loop activated with the --poll-interval option.
-    /// Is by default read from the OS if possible, otherwise set to 4096.
+    /// Use a different page size than the one the OS reports. Controls the alignment of the
+    /// allocated memory, as well as the offset between each read+write in the poll loop activated
+    /// with the --poll-interval option.
     /// Must be non-zero and a power of two.
     pub page_size: Option<usize>,
 
     #[structopt(long)]
-    /// Skips locking the memory region to main memory via the `mlock` syscall.
-    pub no_mlock: bool,
+    /// Skips locking the allocated memory region to main memory (RAM).
+    pub no_lock: bool,
 
     #[structopt(long)]
     /// Skips filling the allocated memory with random data after allocating it. Note that if
-    /// this flag is given together with --no-mlock, or your system does not support mlock, then
-    /// it is likely the ballooning will have no effect. The kernel might not dedicate any memory
-    /// to this process.
+    /// this flag is given together with --no-lock, or your system does not support locking of
+    /// memory to RAM, then it is likely the ballooning will have no effect. The kernel might not
+    /// dedicate any memory to this process.
     pub no_fill: bool,
 
     #[structopt(long)]

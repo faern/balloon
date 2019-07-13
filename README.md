@@ -18,7 +18,7 @@ program starts it will do the following:
 1. Allocate the amount of memory specified, in one continuous chunk. The chunk will be
    aligned to the memory page size the operating system uses, or optionally to the value set with
    `--page-size`.
-2. If the `--no-mlock` flag is absent, and the program runs on an OS where it has this feature
+2. If the `--no-lock` flag is absent, and the program runs on an OS where it has this feature
    implemented, it will lock the allocated memory region to the main memory, prohibiting the OS
    from moving it to the swap. This is implemented with the `mlock` call on unix based platforms
    and `VirtualLock` on Windows.
@@ -74,7 +74,3 @@ possibly your computer will just shut down.
 
 I, the author, don't have detailed knowledge on the memory management internals of most/any
 operating systems. I would greatly appreciate feedback and suggestions on how to improve this tool.
-
-## To do
-
-* Implement automatic fetching of page size on Windows
