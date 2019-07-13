@@ -1,0 +1,26 @@
+[package]
+name = "balloon"
+version = "0.1.0"
+authors = ["Linus Färnstrand <faern@faern.net>"]
+description = """
+    Memory filling tool. Allocates a chunk of memory of a specified size and tries to make sure the
+    OS keeps it in main memory, and not the swap.
+"""
+readme = "README.md"
+repository = "https://github.com/faern/balloon"
+license = "Apache-2.0/MIT"
+keywords = ["memory", "benchmark", "heap", "mlock", "oom"]
+categories = ["caching", "command-line-utilities", "memory-management"]
+edition = "2018"
+
+[dependencies]
+structopt = "0.2"
+rand_xorshift = "0.2.0"
+rand_core = "0.5.0"
+number_prefix = "0.3.0"
+
+[target.'cfg(unix)'.dependencies]
+libc = "0.2"
+
+[target.'cfg(windows)'.dependencies]
+winapi = "0.3.7"
