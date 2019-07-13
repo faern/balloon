@@ -18,17 +18,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "balloon"
-version = "0.1.0"
-dependencies = [
- "number_prefix 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "rand_core 0.5.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "rand_xorshift 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "region 2.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
- "structopt 0.2.18 (registry+https://github.com/rust-lang/crates.io-index)",
-]
-
-[[package]]
 name = "bitflags"
 version = "1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -66,6 +55,17 @@ version = "0.2.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "libc 0.2.59 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "memory-balloon"
+version = "0.1.0"
+dependencies = [
+ "number_prefix 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "rand_core 0.5.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "rand_xorshift 0.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "region 2.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "structopt 0.2.18 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]

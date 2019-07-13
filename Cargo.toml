@@ -1,5 +1,5 @@
 [package]
-name = "balloon"
+name = "memory-balloon"
 version = "0.1.0"
 authors = ["Linus Färnstrand <faern@faern.net>"]
 description = """
@@ -12,6 +12,10 @@ license = "Apache-2.0/MIT"
 keywords = ["memory", "benchmark", "heap", "mlock", "oom"]
 categories = ["caching", "command-line-utilities", "memory-management"]
 edition = "2018"
+
+[[bin]]
+name = "balloon"
+path = "src/main.rs"
 
 [dependencies]
 number_prefix = "0.3.0"
